@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+<style>
+    html,body {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    #collider1 {
+        height: 400px;
+    }
+
+    #collider1 .ion {
+        border-radius: 1000px;
+        background-color: #000;
+    }
+    
+    #collider2 {
+        background-color: #000;
+        height: 400px;
+    }
+
+    #collider2 .ion {
+        border-radius: 1000px;
+        background-color: #fff;
+    }
+</style>
+
+
+<div id="collider1"></div>
+<div id="collider2"></div>
+
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="../dist/jquery.collider.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $("#collider1").collider();
+        $("#collider2").collider({
+            number: 40,
+            maxspeed: 400
+        });
+    })
+</script>
+
+</body>
+</html>

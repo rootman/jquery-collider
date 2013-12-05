@@ -1,0 +1,16 @@
+{
+  "name": "jquery-collider",
+  "version": "0.0.1",
+  "description": "Transforms a block element into an ion collider.",
+  "main": "dist/jquery.collider.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tim Rottmann",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-coffee": "~0.7.0"
+  }
+}
