@@ -9,29 +9,54 @@
         this.vy = vy;
         this.r = r;
         this.container = container;
+        this.containerHeight = this.container.height();
+        this.containerWidth = this.container.width();
         this.render();
       }
 
-      Ion.prototype.move = function(dt) {
-        this.x = this.x + this.vx * dt / 1000;
-        this.y = this.y + this.vy * dt / 1000;
-        this.domelement.css("left", this.x + "px");
-        return this.domelement.css("top", this.y + "px");
-      };
-
       Ion.prototype.render = function() {
-        var element;
+        var $this;
         this.domelement = $('<div class="ion"></div>');
         this.container.append(this.domelement);
         this.domelement.height(2 * this.r);
         this.domelement.width(2 * this.r);
-        this.domelement.css("left", this.x + "px");
-        this.domelement.css("top", this.y + "px");
         this.domelement.css("position", "absolute");
-        element = this.domelement;
+        this.domelement.css("transform", "translate3d(" + this.x + "px," + this.y + "px,0px)");
+        $this = this;
         return window.setTimeout(function() {
-          return element.css("transition", "all 1s linear");
+          return $this.animate();
         }, 1);
+      };
+
+      Ion.prototype.animate = function() {
+        var $this, dt, tx, ty;
+        if (this.vx > 0) {
+          tx = (this.containerWidth - this.x) / this.vx;
+        } else {
+          tx = this.x / -this.vx;
+        }
+        if (this.vy > 0) {
+          ty = (this.containerHeight - this.y) / this.vy;
+        } else {
+          ty = this.y / -this.vy;
+        }
+        dt = tx;
+        if (tx > ty) {
+          dt = ty;
+        }
+        this.x = this.x + this.vx * dt;
+        this.y = this.y + this.vy * dt;
+        this.domelement.css("transition", "all " + (dt.toFixed(2)) + "s linear");
+        this.domelement.css("transform", "translate3d(" + (this.x.toFixed(2)) + "px," + (this.y.toFixed(2)) + "px,0px)");
+        if (tx > ty) {
+          this.vy = -this.vy;
+        } else {
+          this.vx = -this.vx;
+        }
+        $this = this;
+        return window.setTimeout(function() {
+          return $this.animate();
+        }, dt.toFixed(2) * 1000);
       };
 
       return Ion;
@@ -45,6 +70,7 @@
         this.maxspeed = maxspeed;
         this.element.css("position", "relative");
         this.element.css("overflow", "hidden");
+        this.element.css("transform", "translate3d(0, 0, 0)");
         this.ions = new Array();
         this.setSize();
         this.createIons(this.number);
@@ -63,34 +89,6 @@
         return _results;
       };
 
-      Collider.prototype.animate = function(interval) {
-        var $this;
-        $this = this;
-        window.setTimeout(function() {
-          return $this.step(interval);
-        }, 1);
-        return this.timer = setInterval(function() {
-          return $this.step(interval);
-        }, interval);
-      };
-
-      Collider.prototype.step = function(interval) {
-        var ion, _i, _len, _ref, _results;
-        _ref = this.ions;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          ion = _ref[_i];
-          if (ion.x + 2 * ion.r > this.width || ion.x < 0) {
-            ion.vx = -ion.vx;
-          }
-          if (ion.y + 2 * ion.r > this.height || ion.y < 0) {
-            ion.vy = -ion.vy;
-          }
-          _results.push(ion.move(interval));
-        }
-        return _results;
-      };
-
       Collider.prototype.setSize = function() {
         this.height = this.element.height();
         return this.width = this.element.width();
@@ -104,14 +102,12 @@
         var settings;
         settings = {
           number: 20,
-          maxspeed: 100,
-          interval: 1000
+          maxspeed: 100
         };
         settings = $.extend(settings, options);
         return this.each(function() {
           var collider;
-          collider = new Collider($(this), settings.number, settings.maxspeed);
-          return collider.animate(settings.interval);
+          return collider = new Collider($(this), settings.number, settings.maxspeed);
         });
       }
     });
