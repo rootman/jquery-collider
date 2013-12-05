@@ -5,6 +5,7 @@
     constructor: (@x, @y, @vx, @vy, @r, @container) ->
       @render()
 
+
     move: (dt) ->
       @x = @x + @vx * dt/1000
       @y = @y + @vy * dt/1000
@@ -20,12 +21,19 @@
       @domelement.css "left", @x + "px"
       @domelement.css "top", @y + "px"
       @domelement.css "position", "absolute"
+      element = @domelement
+      window.setTimeout () ->
+        element.css "transition", "all 1s linear"
+      , 1
+
+
 
 
   class Collider
 
     constructor: (@element, @number, @maxspeed) ->
       @element.css "position", "relative"
+      @element.css "overflow", "hidden"
       @ions = new Array()
       @setSize()
       @createIons(@number)
@@ -40,6 +48,9 @@
 
     animate: (interval) ->
       $this = this
+      window.setTimeout () ->
+        $this.step(interval)
+      , 1
       @timer = setInterval () ->
         $this.step(interval)
       , interval
@@ -59,7 +70,6 @@
 
 
 
-
   # extend jquery
   $.fn.extend
 
@@ -69,7 +79,7 @@
       settings =
         number: 20      # number of ions
         maxspeed: 100   # maximum speed in pixels/second
-        interval: 10    # animation interval
+        interval: 1000    # animation interval
 
       # merge default settings with options
       settings = $.extend settings, options

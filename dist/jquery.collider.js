@@ -20,13 +20,18 @@
       };
 
       Ion.prototype.render = function() {
+        var element;
         this.domelement = $('<div class="ion"></div>');
         this.container.append(this.domelement);
         this.domelement.height(2 * this.r);
         this.domelement.width(2 * this.r);
         this.domelement.css("left", this.x + "px");
         this.domelement.css("top", this.y + "px");
-        return this.domelement.css("position", "absolute");
+        this.domelement.css("position", "absolute");
+        element = this.domelement;
+        return window.setTimeout(function() {
+          return element.css("transition", "all 1s linear");
+        }, 1);
       };
 
       return Ion;
@@ -39,6 +44,7 @@
         this.number = number;
         this.maxspeed = maxspeed;
         this.element.css("position", "relative");
+        this.element.css("overflow", "hidden");
         this.ions = new Array();
         this.setSize();
         this.createIons(this.number);
@@ -60,6 +66,9 @@
       Collider.prototype.animate = function(interval) {
         var $this;
         $this = this;
+        window.setTimeout(function() {
+          return $this.step(interval);
+        }, 1);
         return this.timer = setInterval(function() {
           return $this.step(interval);
         }, interval);
@@ -96,7 +105,7 @@
         settings = {
           number: 20,
           maxspeed: 100,
-          interval: 10
+          interval: 1000
         };
         settings = $.extend(settings, options);
         return this.each(function() {
