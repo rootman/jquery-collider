@@ -1,0 +1,22 @@
+{
+  "name": "jquery-collider",
+  "homepage": "https://github.com/rootman/jquery-collider",
+  "authors": [
+    "Tim Rottmann <tim.rottmann@gmail.com>"
+  ],
+  "description": "Transforms a block element into an ion collider.",
+  "main": "dist/jquery.collider.js",
+  "keywords": [
+    "jquery",
+    "collider",
+    "plugin"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
