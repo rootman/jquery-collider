@@ -1,0 +1,3 @@
+# jQuery Collider
+
+Desperately needing a description...
