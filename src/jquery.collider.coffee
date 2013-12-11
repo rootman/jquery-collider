@@ -5,6 +5,12 @@
     constructor: (@x, @y, @vx, @vy, @r, @container) ->
       @containerHeight = @container.height()
       @containerWidth = @container.width()
+      $this = this
+
+      $(window).on "resize", () ->
+        $this.containerHeight = $(this).height()
+        $this.containerWidth = $(this).width()
+
       @render()
 
     render: () ->

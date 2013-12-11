@@ -3,6 +3,7 @@
     var Collider, Ion;
     Ion = (function() {
       function Ion(x, y, vx, vy, r, container) {
+        var $this;
         this.x = x;
         this.y = y;
         this.vx = vx;
@@ -11,6 +12,11 @@
         this.container = container;
         this.containerHeight = this.container.height();
         this.containerWidth = this.container.width();
+        $this = this;
+        $(window).on("resize", function() {
+          $this.containerHeight = $(this).height();
+          return $this.containerWidth = $(this).width();
+        });
         this.render();
       }
 
